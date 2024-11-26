@@ -80,4 +80,37 @@ describe('RegisterComponent', () => {
 
 
   })
+  it('should give an error if empty field',() =>{
+
+    updateForm('','','','');
+
+    const userEmail = component.form.controls.email;
+    component.submit();
+
+    expect(userEmail?.value).toBeFalsy();
+    expect(userEmail?.valid).toBe(false);
+
+  })
+  it('should give an error if invalid field',() =>{
+
+    updateForm('useremail-fr','','','');
+
+    const userEmail = component.form.controls.email;
+    component.submit();
+
+    expect(userEmail?.value).toBeDefined();
+    expect(userEmail?.valid).toBe(false);
+
+
+  })
+  it('should be a valid field now ',() =>{
+    updateForm('useremail@email.fr','','','');
+    const userEmail = component.form.controls.email;
+
+    component.submit();
+
+    expect(userEmail?.value).toBeDefined();
+    expect(userEmail?.valid).toBe(true);
+
+  })
 });

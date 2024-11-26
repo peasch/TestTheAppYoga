@@ -1,16 +1,16 @@
 package com.openclassrooms.starterjwt.security.jwt;
 
-import java.util.Date;
-
+import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import java.util.Date;
 
-import io.jsonwebtoken.*;
+
 
 @Component
 public class JwtUtils {

@@ -14,12 +14,15 @@ import { LoginComponent } from './login.component';
 import {SessionInformation} from "../../../../interfaces/sessionInformation.interface";
 import {AuthService} from "../../services/auth.service";
 import {LoginRequest} from "../../interfaces/loginRequest.interface";
-import {of} from "rxjs";
+import {of, throwError} from "rxjs";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {Router} from "@angular/router";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
+  let router: Router;
   let sessionService: SessionService;
   let mockSessionInformation: SessionInformation = {
     token: 'token',
@@ -58,6 +61,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     authService = TestBed.inject(AuthService);
     sessionService = TestBed.inject(SessionService);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
@@ -72,13 +76,14 @@ describe('LoginComponent', () => {
     updateForm('bob@bob.fr','bobfr');
     let sessionServiceSpy = jest.spyOn(sessionService, 'logIn');
     let authServiceSpy = jest.spyOn(authService,'login').mockReturnValue(of(mockSessionInformation));
-    let loggedIn =jest.spyOn(sessionService,'$isLogged');
+    let routerSpy = jest.spyOn(router,'navigate').mockImplementation(async () => true);
     //when
     component.submit();
     //then
     expect(authServiceSpy).toHaveBeenCalledWith(mockLoginRequest);
     expect(sessionServiceSpy).toHaveBeenCalled();
     expect(sessionService.isLogged).toBe(true);
+    expect(routerSpy).toHaveBeenCalledWith(['/sessions'])
 
   })
 
@@ -101,6 +106,23 @@ describe('LoginComponent', () => {
     component.submit();
     //then
     expect(authServiceSpy).toHaveBeenCalledWith(mockLoginNoPwRequest);
+
     expect(sessionServiceSpy).toThrowError();
+
+  })
+  it('should set onError to true when login fails', () => {
+
+    updateForm('bob@bob.fr','');
+    let sessionServiceSpy = jest.spyOn(sessionService, 'logIn');
+    let authServiceSpy = jest.spyOn(authService,'login').mockImplementation(()=> throwError(() => new Error('err')));
+    // Appelez la méthode submit
+    component.submit();
+
+    // Vérifiez que onError est défini à true
+
+    expect(component.onError).toEqual(true);
+    expect(authServiceSpy).toHaveBeenCalled();
+    expect(sessionServiceSpy).not.toHaveBeenCalled();
+// Vérifiez que navigate n'est pas appelé
   })
 });
