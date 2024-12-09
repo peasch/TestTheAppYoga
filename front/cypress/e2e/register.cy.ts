@@ -1,5 +1,8 @@
 describe('register spec',() =>{
-
+  beforeEach(function () {
+    cy.fixture('teachers.json').as('teachersData');
+    cy.fixture('users.json').as('usersData');
+  });
 
   it('register successful',() =>{
     const newUser = {
@@ -26,6 +29,7 @@ describe('register spec',() =>{
     cy.get('input[formControlName=lastName]').type(newUser.lastName)
     cy.get('input[formControlName=email]').type(newUser.email)
     cy.get('input[formControlName=password]').type(`${newUser.password}{enter}{enter}`)
+
 
     cy.url().should('include', '/login')
 

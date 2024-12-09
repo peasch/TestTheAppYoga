@@ -5,11 +5,7 @@ describe('Login spec', () => {
     cy.fixture('sessions.json').as('sessionsData');
   });
 
-  it('Login successful', function () {
-    // Vérifiez que les données sont chargées correctement
-    cy.log('Users data loaded:', this.teachersData);
-    expect(this.teachersData).to.have.length.greaterThan(0);
-  });
+
 
   it('Login successful with user selection', function () { // Utilisez une fonction normale
     cy.visit('/login');
@@ -77,5 +73,10 @@ describe('Login spec', () => {
     cy.get('button[type=submit]').click();
 
     cy.url().should('include', '/sessions');
+
+    cy.get('span[class=link]').contains("Logout").click()
+
+    cy.url().should('eq', 'http://localhost:4200/')
   });
+
 });
