@@ -5,7 +5,7 @@ export default {
     rules: [
       {
         test: /\.(js|ts)$/,
-        loader: '@jsdevtools/coverage-istanbul-loader',
+        loader: '@devtools/coverage-istanbul-loader',
         options: { esModules: true },
         enforce: 'post',
         include: path.join(__dirname, '..', 'src'),

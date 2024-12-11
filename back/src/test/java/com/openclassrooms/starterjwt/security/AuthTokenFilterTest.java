@@ -1,40 +1,119 @@
 package com.openclassrooms.starterjwt.security;
 
 import com.openclassrooms.starterjwt.security.jwt.AuthTokenFilter;
+import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
+import com.openclassrooms.starterjwt.security.services.UserDetailsServiceImpl;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mock.web.MockHttpServletRequest;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+// JUnit & Mockito
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+// Spring Security
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
+// Servlet
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+// Autres imports
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthTokenFilterTest {
-    private final AuthTokenFilter authTokenFilter = new AuthTokenFilter();
 
-    @Test
-    void parseJwtValidToken() {
-        // GIVEN
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        String validToken = "validToken";
-        request.addHeader("Authorization", "Bearer " + validToken);
+    @Mock
+    private JwtUtils jwtUtils;
 
-        // WHEN
-        String result = authTokenFilter.parseJwt(request);
+    @Mock
+    private UserDetailsServiceImpl userDetailsService;
 
-        // THEN
-        assertThat(result).isEqualTo(validToken);
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private HttpServletResponse response;
+
+    @Mock
+    private FilterChain filterChain;
+
+    @Mock
+    private UserDetails userDetails;
+
+    @InjectMocks
+    private AuthTokenFilter authTokenFilter;
+
+    @BeforeEach
+    void setUp() {
+        SecurityContextHolder.clearContext();
+    }
+
+    @AfterEach
+    void tearDown() {
+        SecurityContextHolder.clearContext();
     }
 
     @Test
-    void parseJwtNoTokenInHeader() {
-        //GIVEN
-        MockHttpServletRequest request = new MockHttpServletRequest();
+    void testDoFilterInternalWithValidToken() throws ServletException, IOException {
+        // Simuler un header Authorization correct
+        when(request.getHeader("Authorization")).thenReturn("Bearer validToken");
 
-        // WHEN
-        String result = authTokenFilter.parseJwt(request);
+        // Simuler un JWT valide
+        when(jwtUtils.validateJwtToken("validToken")).thenReturn(true);
+        when(jwtUtils.getUserNameFromJwtToken("validToken")).thenReturn("testuser");
 
-        // THEN
-        assertThat(result).isNull();
+        // Simuler un UserDetails
+        when(userDetailsService.loadUserByUsername("testuser")).thenReturn(userDetails);
+
+        // Exécuter le filtre
+        authTokenFilter.doFilterInternal(request, response, filterChain);
+
+        // Vérifier que le filtre a appelé le chain.doFilter
+        verify(filterChain, times(1)).doFilter(request, response);
+
+        // Vérifier que SecurityContextHolder a été mis à jour
+        assertNotNull(SecurityContextHolder.getContext().getAuthentication());
+
+    }
+
+    @Test
+    void testDoFilterInternalWithInvalidToken() throws ServletException, IOException {
+        // Simuler un header Authorization avec un token invalide
+        when(request.getHeader("Authorization")).thenReturn("Bearer invalidToken");
+
+        // Simuler JWT invalide
+        when(jwtUtils.validateJwtToken("invalidToken")).thenReturn(false);
+
+        // Exécuter le filtre
+        authTokenFilter.doFilterInternal(request, response, filterChain);
+
+        // Vérifier que le filtre a appelé le chain.doFilter
+        verify(filterChain, times(1)).doFilter(request, response);
+
+        // Vérifier que SecurityContextHolder n'a pas d'authentification
+        assertNull(SecurityContextHolder.getContext().getAuthentication());
+    }
+
+    @Test
+    void testDoFilterInternalWithoutAuthorizationHeader() throws ServletException, IOException {
+        // Pas de header Authorization
+        when(request.getHeader("Authorization")).thenReturn(null);
+
+        authTokenFilter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain, times(1)).doFilter(request, response);
+        assertNull(SecurityContextHolder.getContext().getAuthentication());
     }
 }
