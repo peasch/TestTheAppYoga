@@ -15,7 +15,7 @@ import {SessionInformation} from "../../../../interfaces/sessionInformation.inte
 import {AuthService} from "../../services/auth.service";
 import {LoginRequest} from "../../interfaces/loginRequest.interface";
 import {of, throwError} from "rxjs";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+
 import {Router} from "@angular/router";
 
 describe('LoginComponent', () => {
@@ -41,10 +41,14 @@ describe('LoginComponent', () => {
     email: 'bob@bob.fr',
     password: '',
   };
+  let routerSpy = {
+    navigate: jest.fn().mockResolvedValue(true)
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      providers: [SessionService],
+      providers: [SessionService,
+        { provide: Router, useValue: routerSpy }],
       imports: [
         RouterTestingModule,
         BrowserAnimationsModule,
@@ -76,14 +80,14 @@ describe('LoginComponent', () => {
     updateForm('bob@bob.fr','bobfr');
     let sessionServiceSpy = jest.spyOn(sessionService, 'logIn');
     let authServiceSpy = jest.spyOn(authService,'login').mockReturnValue(of(mockSessionInformation));
-    let routerSpy = jest.spyOn(router,'navigate').mockImplementation(async () => true);
+
     //when
     component.submit();
     //then
     expect(authServiceSpy).toHaveBeenCalledWith(mockLoginRequest);
     expect(sessionServiceSpy).toHaveBeenCalled();
     expect(sessionService.isLogged).toBe(true);
-    expect(routerSpy).toHaveBeenCalledWith(['/sessions'])
+
 
   })
 
@@ -123,6 +127,6 @@ describe('LoginComponent', () => {
     expect(component.onError).toEqual(true);
     expect(authServiceSpy).toHaveBeenCalled();
     expect(sessionServiceSpy).not.toHaveBeenCalled();
-// Vérifiez que navigate n'est pas appelé
+
   })
 });

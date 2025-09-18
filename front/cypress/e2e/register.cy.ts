@@ -1,25 +1,38 @@
 describe('register spec',() =>{
-
+  beforeEach(function () {
+    cy.fixture('teachers.json').as('teachersData');
+    cy.fixture('users.json').as('usersData');
+  });
 
   it('register successful',() =>{
+    const newUser = {
+      id: 3, // Assurez-vous que l'ID est unique
+      firstName: "boby",
+      lastName: "Lastbob",
+      email: "boby@boby.fr",
+      password:"test!1234",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
     cy.visit('/register')
 
     cy.intercept('POST', '/api/auth/register', {
       body: {
-
-        email: 'email',
-        firstName: 'firstName',
-        lastName: 'lastName',
-        password:'password'
+        email: newUser.email,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        password: newUser.password,
       },
-    })
+    });
 
-    cy.get('input[formControlName=firstName]').type("boby")
-    cy.get('input[formControlName=lastName]').type("Lastbob")
-    cy.get('input[formControlName=email]').type("boby@boby.fr")
-    cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+    cy.get('input[formControlName=firstName]').type(newUser.firstName)
+    cy.get('input[formControlName=lastName]').type(newUser.lastName)
+    cy.get('input[formControlName=email]').type(newUser.email)
+    cy.get('input[formControlName=password]').type(`${newUser.password}{enter}{enter}`)
+
 
     cy.url().should('include', '/login')
+
 
   })
 

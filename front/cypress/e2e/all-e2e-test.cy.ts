@@ -1,0 +1,5 @@
+import './account.cy'
+import './login.cy'
+import './editSession.cy'
+import './register.cy'
+import './loginAndSession.cy'

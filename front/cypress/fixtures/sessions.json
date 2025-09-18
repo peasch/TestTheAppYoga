@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Yoga Matinal",
+    "date": "2024-12-05T08:30:00Z",
+    "teacher_id": 1,
+    "description": "Session de yoga matinale avec l'instructrice Anne.",
+    "createdAt": "2024-12-01T10:00:00Z",
+    "updatedAt": "2024-12-03T12:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Pilates en Soirée",
+    "date": "2024-12-06T18:00:00Z",
+    "teacher_id": 2,
+    "description": "Cours de pilates en soirée animé par Larry.",
+    "createdAt": "2024-12-02T14:30:00Z",
+    "updatedAt": "2024-12-04T16:45:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Méditation et Relaxation",
+    "date": "2024-12-07T20:00:00Z",
+    "teacher_id": 3,
+    "description": "Une session apaisante de méditation guidée par Alice.",
+    "createdAt": "2024-12-01T09:15:00Z",
+    "updatedAt": "2024-12-03T11:25:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Yoga Avancé",
+    "date": "2024-12-08T10:00:00Z",
+    "teacher_id": 1,
+    "description": "Pour les pratiquants avancés, dirigé par Anne.",
+    "createdAt": "2024-12-01T08:30:00Z",
+    "updatedAt": "2024-12-05T10:45:00Z"
+  },
+  {
+    "id": 5,
+    "name": "Renforcement du Centre",
+    "date": "2024-12-09T16:00:00Z",
+    "teacher_id": 2,
+    "description": "Renforcez votre centre avec une session de pilates animée par Larry.",
+    "createdAt": "2024-12-02T10:15:00Z",
+    "updatedAt": "2024-12-04T12:30:00Z"
+  }
+]

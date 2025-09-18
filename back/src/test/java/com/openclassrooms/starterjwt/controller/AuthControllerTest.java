@@ -9,6 +9,7 @@ import com.openclassrooms.starterjwt.payload.response.MessageResponse;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
 import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
 
@@ -136,6 +138,9 @@ public class AuthControllerTest {
             JwtResponse jwtResponse = (JwtResponse) response.getBody();
             assertThat(jwtResponse.getToken()).isEqualTo("mockToken");
             assertThat(jwtResponse.getUsername()).isEqualTo("user@example.com");
+            assertThat(jwtResponse.getFirstName()).isEqualTo(null);
+            assertThat(jwtResponse.getLastName()).isEqualTo(null);
+
 
         }
 
