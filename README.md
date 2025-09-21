@@ -58,12 +58,12 @@ Cypress will run the app as a user.
 
 # Code Coverage
 ### Backend (Spring Boot - JUnit / Jacoco)
-Report: [Jacoco Report](target/site/jacoco/index.html)
+Report: [Jacoco Report](back/target/site/jacoco/index.html)
 ### Frontend (Angular - Jest)
-Report: [Jest Coverage](frontend/coverage/lcov-report/index.html)
+Report: [Jest Coverage](front/coverage/jest/lcov-report/index.html)
 
 ### E2E (Cypress)
-Report: [Cypress Coverage](frontend/coverage/lcov-report/index.html)
+Report: [Cypress Coverage](front/coverage/lcov-report/index.html)
 
 ## Code Coverage
 
