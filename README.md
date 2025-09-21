@@ -69,4 +69,6 @@ Report: [Cypress Coverage](front/coverage/lcov-report/index.html)
 
 [![codecov](https://codecov.io/gh/peasch/TestTheAppYoga/master/graph/badge.svg)](https://codecov.io/gh/peasch/TestTheAppYoga)
 
-GL
+[Backend Coverage Report](https://<user>.github.io/<repo>/jacoco/index.html)
+[Frontend Coverage Report](https://<user>.github.io/<repo>/jest/index.html)
+[E2E Coverage Report](https://<user>.github.io/<repo>/cypress/index.html)
