@@ -65,11 +65,8 @@ Report: [Jest Coverage](frontend/coverage/lcov-report/index.html)
 ### E2E (Cypress)
 Report: [Cypress Coverage](frontend/coverage/lcov-report/index.html)
 
----
+## Code Coverage
 
-## Badges
+[![codecov](https://codecov.io/gh/peasch/TestTheAppYoga/master/graph/badge.svg)](https://codecov.io/gh/peasch/TestTheAppYoga)
 
-[![Backend Coverage](https://img.shields.io/badge/Backend%20Coverage-85%25-green)]()
-[![Frontend Coverage](https://img.shields.io/badge/Frontend%20Coverage-78%25-yellow)]()
-[![E2E Coverage](https://img.shields.io/badge/E2E%20Coverage-70%25-orange)]()
 GL
