@@ -59,16 +59,19 @@ Cypress will run the app as a user.
 # Code Coverage
 ### Backend (Spring Boot - JUnit / Jacoco)
 Report: [Jacoco Report](back/target/site/jacoco/index.html)
+[![Backend Coverage](https://img.shields.io/badge/Backend%20Coverage-85%25-green)]()
+
 ### Frontend (Angular - Jest)
 Report: [Jest Coverage](front/coverage/jest/lcov-report/index.html)
+[![Frontend Coverage](https://img.shields.io/badge/Frontend%20Coverage-83.63%25-yellow)]()
 
 ### E2E (Cypress)
 Report: [Cypress Coverage](front/coverage/lcov-report/index.html)
+[![E2E Coverage](https://img.shields.io/badge/E2E%20Coverage-90.54%25-orange)]()
 
 ## Code Coverage
 
-[![codecov](https://codecov.io/gh/peasch/TestTheAppYoga/master/graph/badge.svg)](https://codecov.io/gh/peasch/TestTheAppYoga)
 
-[Backend Coverage Report](https://<user>.github.io/<repo>/jacoco/index.html)
-[Frontend Coverage Report](https://<user>.github.io/<repo>/jest/index.html)
-[E2E Coverage Report](https://<user>.github.io/<repo>/cypress/index.html)
+
+
+
