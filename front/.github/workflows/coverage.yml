@@ -17,9 +17,12 @@ jobs:
           cd frontend
           npm ci
           npm run test -- --coverage
+
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/index.html,./front/coverage/lcov.info,front/coverage/jest/lcov-report/index.html
           flags: unittests
           fail_ci_if_error: true
+
