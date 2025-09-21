@@ -1,23 +1,75 @@
 # Yoga App !
 
 
-For launch and generate the jacoco code coverage:
+## Installation
 
 clone the project in your IDE.
-then :
-be sure to put your database credentials and 
+$ git clone https://github.com/peasch/TestTheAppYoga
+## DataBase :
+$ run the script.sql
+$ from ../ressources/sql/script.sql
+$ don't forget to set the DB credentials :
+ - in the run configuration
+ - environment variables
+ - DB_USERNAME / DB_PASSWORD
 
-go in the back folder to build the backend. cd back
->mvn clean install
-Run with your ide or  mvn springboot:run
+## build & run the back end
+$ cd /back/
+$ mvn clean install 
+$ run SpringBootSecurityJwtApplication
 
-then go in the front folder cd.. > cd front
+## build and run the front end
+$ cd /front/
+$ npm start
 
-to run the test in the terminal:
-npm run e2e:ci
+# Testing
 
-or npm start
-npx cypress open
-will launch cypress to run front end-to-end tests
+## BackEnd Tests
 
+$In the terminal 
+$ run mvn clean test
+
+$ then get your test coverage in this folder 
+$ target/site/jacoco/index.html run in a browser to a graphic view
+
+## FrontEnd Tests
+
+$In the terminal 
+$ run npm run test
+
+$ then get your test coverage in this folder 
+$ front/coverage/jest/lcov-report/index.html run in a browser to a graphic view
+
+## End to End Tests
+$In the terminal 
+$npm run e2e:ci
+
+$ then get your test coverage in this folder 
+$ front/coverage/lcov-report/index.html run in a browser to a graphic view
+
+## Cypress End To End Tests
+
+$ start the backend
+$ start the frontend 
+$ npx cypress open
+
+$in Cypress choose E2E testing, and a browser, and then run the needed tests.
+Cypress will run the app as a user.
+
+# Code Coverage
+### Backend (Spring Boot - JUnit / Jacoco)
+Report: [Jacoco Report](target/site/jacoco/index.html)
+### Frontend (Angular - Jest)
+Report: [Jest Coverage](frontend/coverage/lcov-report/index.html)
+
+### E2E (Cypress)
+Report: [Cypress Coverage](frontend/coverage/lcov-report/index.html)
+
+---
+
+## Badges
+
+[![Backend Coverage](https://img.shields.io/badge/Backend%20Coverage-85%25-green)]()
+[![Frontend Coverage](https://img.shields.io/badge/Frontend%20Coverage-78%25-yellow)]()
+[![E2E Coverage](https://img.shields.io/badge/E2E%20Coverage-70%25-orange)]()
 GL
