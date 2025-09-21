@@ -63,11 +63,11 @@ Report: [Jacoco Report](back/target/site/jacoco/index.html)
 
 ### Frontend (Angular - Jest)
 Report: [Jest Coverage](front/coverage/jest/lcov-report/index.html)
-[![Frontend Coverage](https://img.shields.io/badge/Frontend%20Coverage-83.63%25-yellow)]()
+[![Frontend Coverage](https://img.shields.io/badge/Frontend%20Coverage-83.63%25-green)]()
 
 ### E2E (Cypress)
 Report: [Cypress Coverage](front/coverage/lcov-report/index.html)
-[![E2E Coverage](https://img.shields.io/badge/E2E%20Coverage-90.54%25-orange)]()
+[![E2E Coverage](https://img.shields.io/badge/E2E%20Coverage-90.54%25-green)]()
 
 ## Code Coverage
 
