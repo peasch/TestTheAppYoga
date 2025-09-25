@@ -59,4 +59,5 @@ public class Session {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }

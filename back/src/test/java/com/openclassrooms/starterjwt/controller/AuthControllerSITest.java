@@ -1,6 +1,6 @@
 package com.openclassrooms.starterjwt.controller;
 
-import com.openclassrooms.starterjwt.services.UserService;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-//@WebMvcTest(controllers = {AuthController.class, UserService.class})
 @ExtendWith(SpringExtension.class)
 class AuthControllerSITest {
     @Autowired
@@ -69,8 +70,23 @@ class AuthControllerSITest {
                         .content(requestBody))
                 .andExpect(status().isOk());
     }
+    @Test
+    void loginToDeleteTest() throws Exception {
+        String email = "john@john.fr";
+        String password = "test!1234";
+        String requestBody = "{\"email\": \"" + email + "\", \"password\": \"" + password + "\"}";
 
+        MvcResult result = mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)).andReturn();
 
+        String content = result.getResponse().getContentAsString();
+        String token = JsonPath.read(content, "$.token");
+        int id = JsonPath.read(content, "$.id");
+
+        mockMvc.perform(delete("/api/user/" + id).header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk());
+    }
 
 
 }

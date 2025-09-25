@@ -4,6 +4,8 @@ import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -18,5 +20,8 @@ public class UserService {
 
     public User findById(Long id) {
         return this.userRepository.findById(id).orElse(null);
+    }
+    public List<User> findAll() {
+        return this.userRepository.findAll();
     }
 }

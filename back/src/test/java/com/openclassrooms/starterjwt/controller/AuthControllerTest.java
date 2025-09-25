@@ -30,7 +30,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -130,7 +129,7 @@ public class AuthControllerTest {
 
             //WHEN
 
-            ResponseEntity response = authController.authenticateUser(loginRequest);
+            ResponseEntity<?> response = authController.authenticateUser(loginRequest);
 
             //ThEN
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
