@@ -3,12 +3,6 @@ package com.openclassrooms.starterjwt.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.openclassrooms.starterjwt.dto.SessionDto;
-import com.openclassrooms.starterjwt.models.Session;
-import com.openclassrooms.starterjwt.models.User;
-import com.openclassrooms.starterjwt.services.SessionService;
-import com.openclassrooms.starterjwt.services.TeacherService;
-import com.openclassrooms.starterjwt.services.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +14,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 
-import java.text.DateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -64,8 +49,6 @@ public class SessionControllerSITest {
 
 
 
-
-
     @Test
     void modifyASessionTest() throws Exception {
 
@@ -85,6 +68,7 @@ public class SessionControllerSITest {
         int sessId = JsonPath.read(sessionString, "$.id");
         SessionDto modifiedSession = createSessionRequest;
         modifiedSession.setName("Modified session name");
+
         mockMvc.perform(put("/api/session/"+sessId)
                         .contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + token)
                         .content(mapper.writeValueAsString(modifiedSession)))
@@ -132,13 +116,7 @@ public class SessionControllerSITest {
     @Test
     void findASessionWithIdTest() throws Exception {
 
-        String email = "jack@jack.fr";
-        String password = "jack!1234";
-        String requestBody = "{\"email\": \"" + email + "\", \"password\": \"" + password + "\"}";
-
-        MvcResult result1 = mockMvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)).andReturn();
+        MvcResult result1 = login();
 
 
         String content1 = result1.getResponse().getContentAsString();
