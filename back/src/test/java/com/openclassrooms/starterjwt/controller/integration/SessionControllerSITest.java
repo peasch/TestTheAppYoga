@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt.controller;
+package com.openclassrooms.starterjwt.controller.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
